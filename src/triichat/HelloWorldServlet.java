@@ -1,4 +1,4 @@
-spackage triichat;
+package triichat;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
