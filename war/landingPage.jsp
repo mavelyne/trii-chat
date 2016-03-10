@@ -24,6 +24,7 @@
     User user = userService.getCurrentUser();
     if(user != null){
 %>
+<p>Welcome, <%= user.getNickname() %></p>
 <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign out</a></p>
 <%
     }else{
