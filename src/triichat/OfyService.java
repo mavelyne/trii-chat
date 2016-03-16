@@ -21,14 +21,23 @@ import com.googlecode.objectify.Objectify;
  * Deleting
  objectify.delete().keys(keys);
 
-
  */
-
+/**
+ * 
+ * Objectify wrapper used to register all classes that will be stored.
+ * @author Matthew Zhan, Margret Tumbokon
+ *
+ */
 public class OfyService {
+	/*
+	 * Factory Pattern?
+	 */
     static {
         // register all classes here
-        //ObjectifyService.register(Greeting.class);
-        //ObjectifyService.register(Subscriber.class);
+        ObjectifyService.register(triichat.Group.class);
+        ObjectifyService.register(triichat.Message.class);
+        ObjectifyService.register(triichat.Trii.class);
+        ObjectifyService.register(triichat.User.class);
     }
 
     // use OfyService.ofy() in place of ofy()
