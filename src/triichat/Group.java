@@ -2,14 +2,20 @@ package triichat;
 
 import java.util.List;
 import java.util.Set;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
  * Created by Margret on 3/8/2016.
  */
+@Entity
 public class Group {
+	@Id private Long id;
+	String name;
     Set<User> users;
     Set<Trii> triis;
 
+    private Group(){}
     public void addUser(String name){
         //TODO
     }
