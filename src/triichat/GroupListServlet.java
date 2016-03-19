@@ -3,12 +3,10 @@ package triichat;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -30,7 +28,6 @@ public class GroupListServlet extends HttpServlet {
 			Set<Group> groups = tuser.getGroups();
 			boolean first = true;
 			if(groups.isEmpty()){ //add a new Group "Alone" :-P
-				System.out.println("I am alone");
 				Set<User> temp = new HashSet<User>();
 				temp.add(tuser);
 				Group g = Group.createGroup("Alone", temp, new HashSet<Trii>());
@@ -38,7 +35,6 @@ public class GroupListServlet extends HttpServlet {
 				groups = tuser.getGroups();
 			}
 			for(Group g : groups){
-				System.out.println(g.getName());
 				if(first){
 					toPrint = toPrint + "{\"id\": " + g.getId() + ", \"name\": " + g.getName() +"}";
 					first = false;
@@ -47,8 +43,8 @@ public class GroupListServlet extends HttpServlet {
 				}
 			}		
 			toPrint = toPrint + "]}";
-			System.out.println(toPrint);
-			System.out.println("{\"groups\": [{\"id\": 10, \"name\": \"GOne\"}, {\"id\": 20, \"name\": \"GTwo\"}, {\"id\": 30, \"name\": \"GThree\"}]}");
+			//System.out.println(toPrint);
+			//System.out.println("{\"groups\": [{\"id\": 10, \"name\": \"GOne\"}, {\"id\": 20, \"name\": \"GTwo\"}, {\"id\": 30, \"name\": \"GThree\"}]}");
 			resp.getWriter().println(toPrint);
 		}
 	}
