@@ -1,6 +1,8 @@
 package triichat;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 /**
  * Created by matthewzhan on 3/8/16.
  */
@@ -8,17 +10,44 @@ import com.googlecode.objectify.annotation.Id;
 public class Trii {
 	@Id private Long id;
     String name;
-    Message root;
+    @Load Ref<Message> root;
 
     private Trii(){}
-    public Trii(String name, Message firstMessage)
+    
+    /**
+     * Creates and saves Trii in datastore
+     * @param name
+     * @param firstMessage 
+     */
+    public static Trii createTrii(String name, Message firstMessage){
+    	return new Trii(name, firstMessage);
+    }
+    private Trii(String name, Message firstMessage)
     {
         this.name = name;
-        this.root = firstMessage;
+        this.root = Ref.create(firstMessage);
+        OfyService.ofy().save().entity(this).now();
     }
 
     public Message getRoot()
     {
-        return root;
+        return root.get();
+    }
+    
+    public String getName(){
+    	return name;
+    }
+    
+    public Long getId(){
+    	return id;
+    }
+    
+    /**
+     * Sets and saves name with Trii
+     * @param name
+     */
+    public void setName(String name){
+    	this.name = name;
+    	OfyService.ofy().save().entity(this);
     }
 }

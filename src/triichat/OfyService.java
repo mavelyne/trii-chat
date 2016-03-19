@@ -1,8 +1,10 @@
 package triichat;
 
+import com.google.appengine.api.datastore.Entity;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.cmd.Loader;
 
 /* Usage
 
@@ -24,13 +26,13 @@ import com.googlecode.objectify.Objectify;
  */
 /**
  * 
- * Objectify wrapper used to register all classes that will be stored.
+ * Objectify adapter used to register all classes that will be stored.
  * @author Matthew Zhan, Margret Tumbokon
  *
  */
 public class OfyService {
 	/*
-	 * Factory Pattern?
+	 * Adapter pattern or facade?
 	 */
     static {
         // register all classes here
@@ -40,12 +42,17 @@ public class OfyService {
         ObjectifyService.register(triichat.User.class);
     }
 
-    // use OfyService.ofy() in place of ofy()
+    /**
+     * Use in place of ObjectifyService.ofy()
+     */
     public static Objectify ofy() {
         return ObjectifyService.ofy();
     }
-	
+    /**
+     * Use in place of ObjectifyService.factory()
+     */
     public static ObjectifyFactory factory(){
         return ObjectifyService.factory();
     }
+   
 }
