@@ -43,7 +43,7 @@ public class Message {
     	}
     	this.replies = new HashSet<Ref<Message>>();
     	this.timestamp = new Date();
-    	OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
     }
     
     public Long getId(){
@@ -74,13 +74,13 @@ public class Message {
 	
 	public void addReply(Message reply){
 		this.replies.add(Ref.create(reply));
-		OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
 		
 	}
     
 	public void addParent(Message parent){
 		this.parents.add(Ref.create(parent));
-		OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
 		
 	}
 }

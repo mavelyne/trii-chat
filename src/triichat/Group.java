@@ -35,7 +35,7 @@ public class Group {
     	for(Trii t : triis){
     		this.triis.add(Ref.create(t));
     	}
-    	OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
     }
     
     public static Group createGroup(String name, Set<User> users, Set<Trii> triis){
@@ -44,12 +44,12 @@ public class Group {
     
     public void addUser(User user){
         this.users.add(Ref.create(user));
-        OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
     }
 
     public void addTrii(Trii trii){
         this.triis.add(Ref.create(trii));
-        OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
     }
 
     public Set<Trii> getTriis(){

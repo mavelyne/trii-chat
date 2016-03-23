@@ -42,13 +42,13 @@ public class User {
         made.federatedId = user.getFederatedIdentity();
         made.authDomain = user.getAuthDomain();
         made.name = user.getNickname();
-        OfyService.ofy().save().entity(made).now();
+        OfyService.save(made);
         return made;
     }
     
     public void setName(String name){
     	this.name = name;
-    	OfyService.ofy().save().entities(this).now();
+        OfyService.save(this);
     }
 
 	public String getEmail() {
@@ -57,7 +57,7 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-		OfyService.ofy().save().entities(this).now();
+        OfyService.save(this);
 	}
 
 	public String getName() {
@@ -88,12 +88,12 @@ public class User {
 	
 	public void addGroup(Group group){
 		this.groups.add(Ref.create(group));
-		OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
 	}
 	
 	public void addContact(User contact){
 		this.contacts.add(Ref.create(contact));
-		OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
 	}
 	
 	/**

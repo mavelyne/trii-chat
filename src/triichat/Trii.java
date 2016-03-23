@@ -26,7 +26,7 @@ public class Trii {
     {
         this.name = name;
         this.root = Ref.create(firstMessage);
-        OfyService.ofy().save().entity(this).now();
+        OfyService.save(this);
     }
 
     public Message getRoot()
@@ -48,6 +48,6 @@ public class Trii {
      */
     public void setName(String name){
     	this.name = name;
-    	OfyService.ofy().save().entity(this);
+        OfyService.save(this);
     }
 }

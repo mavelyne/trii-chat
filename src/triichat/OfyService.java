@@ -54,5 +54,19 @@ public class OfyService {
     public static ObjectifyFactory factory(){
         return ObjectifyService.factory();
     }
+    
+    /**
+     * Saves an entity.
+     * @param entity
+     * @return true if successful save
+     */
+    public static boolean save(Object entity){
+    	try{
+    		OfyService.ofy().save().entity(entity).now();
+    		return true;
+    	}catch(Exception e){
+    		return false;
+    	}
+    }
    
 }
