@@ -1,5 +1,7 @@
 package triichat;
 
+import java.util.List;
+
 import com.google.appengine.api.datastore.Entity;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.ObjectifyFactory;
@@ -69,4 +71,22 @@ public class OfyService {
     	}
     }
    
+    /**
+     * @return Loader for which you can start command sequence
+     */
+    public static Loader load(){
+    	return OfyService.ofy().load();
+    }
+    
+    /**
+     * @see Objectify.ofy().load().type(__).filter(__,__).list()
+     * @param type
+     * @param condition
+     * @param value
+     * @return
+     */
+    public List<Object> loadWithFilter(Class<Object> type, String condition, Object value){
+    	return OfyService.load().type(type).filter(condition, value).list();
+    }
+    
 }
