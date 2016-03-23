@@ -1,11 +1,13 @@
 package triichat;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.cmd.Query;
 /**
@@ -16,9 +18,12 @@ public class User {
 	/*
 	 * Adapter for com.google.appending.api.users.User to add our functionality
 	 */
-	@Id private String id;	//Objectify id uses user id from com.google.appengine.api.users
-    private String name;
+	@Id private String id;	//Objectify id uses user id from com.google.appengine.api.users.User
+	//following fields can be gotten from com.google.appengine.api.users.User
+    @Index private String name;
     private String email;
+    private String federatedId;
+    private String authDomain;
     @Load private Set<Ref<User>> contacts;
     @Load private Set<Ref<Group>> groups;
 
@@ -33,8 +38,9 @@ public class User {
      */
     public static User createUser(com.google.appengine.api.users.User user) {
         User made = new User();
-        made.id = user.getUserId();
-        made.email = user.getEmail();
+        made.id = user.getUserId(); 
+        made.federatedId = user.getFederatedIdentity();
+        made.authDomain = user.getAuthDomain();
         made.name = user.getNickname();
         OfyService.ofy().save().entity(made).now();
         return made;
@@ -58,6 +64,12 @@ public class User {
 		return name;
 	}
 	
+	public String getFederatedId() {
+		return federatedId;
+	}
+	public String getAuthDomain() {
+		return authDomain;
+	}
 	public Set<Group> getGroups(){
 		Set<Group> retval = new HashSet<Group>();
 		for(Ref<Group> r : this.groups){
@@ -108,15 +120,14 @@ public class User {
 	}
 	
 	/**
-	 * INCOMPLETE
-	 * Finds user in datastore by name. Very expensive operation.
+	 * UNTESTED
+	 * Finds user in datastore by name. Expensive operation.
 	 * @param name
 	 * @return Set of users since multiple users can have same name
 	 */
-	public static Set<User> findUserByName(String name){
-		Set<User> retval = new HashSet<User>();
-		//TODO : finish this
-		return retval;
+	public static List<User> findUserByName(String name){
+		List<User> found = OfyService.ofy().load().type(User.class).filter("name",name).list();
+		return found;
 	}
 	
 }
